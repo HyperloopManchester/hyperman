@@ -1,0 +1,6 @@
+[submodule "docs"]
+	path = docs
+	url = https://github.com/HyperloopManchester/docs.git
+[submodule "lib/stdlib"]
+	path = lib/stdlib
+	url = https://github.com/HyperloopManchester/stdlib.git
