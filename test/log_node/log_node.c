@@ -1,4 +1,5 @@
-#include "hyperman_test.h"
+#include "stdlib.h"
+#include "stdlib/test.h"
 
 // minimal "test" possible
 TEST(test_example_foo) {
@@ -35,7 +36,7 @@ int main(void) {
 	TEST_RUN(test_example_foo);
 	TEST_RUN(test_example_bar);
 	TEST_RUN(test_example_baz);
-	//TEST_RUN(test_example_unused);
+	// TEST_RUN(test_example_unused);
 
 	TEST_END();
 }
