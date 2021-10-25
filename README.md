@@ -6,7 +6,7 @@ Main repo for the manchester hyperloop pod. Platform IO, integration tests, etc
 
 To initially set up the repo, it is enough to clone the repo and its submodules:
 ```sh
-$ git clone https://github.com/ManchesterHyperloop/hyperman.git
+$ git clone https://github.com/HyperloopManchester/hyperman.git
 $ cd hyperman/
 $ git submodule init
 $ git submodule update
