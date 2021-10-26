@@ -89,7 +89,11 @@ cd binutils-build
 	--prefix="$CROSS_ROOT" \
 	--target="$GCC_TARGET" \
 	--with-sysroot \
+	--disable-libquadmath \
+	--disable-libssp \
+	--disable-lto \
 	--disable-nls \
+	--disable-host-shared \
 	--disable-shared
 
 make && make install
@@ -118,7 +122,11 @@ cd gcc-build
 	--target="$GCC_TARGET" \
 	--enable-languages=c \
 	--without-headers \
+	--disable-libquadmath \
+	--disable-libssp \
+	--disable-lto \
 	--disable-nls \
+	--disable-host-shared \
 	--disable-shared
 
 make all-gcc all-target-libgcc && make install-gcc install-target-libgcc

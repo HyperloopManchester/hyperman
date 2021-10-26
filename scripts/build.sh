@@ -5,21 +5,14 @@
 TARGET="$1"
 TARGET_MAIN="${TARGET}_main.c"
 
-__OLD="$(pwd)"
-cd $SRC
-	SOURCES="$(find -name '*.c' ! -name '*_main.c')"
-cd $__OLD
+UNITY="$(mktemp --suffix=.c)"
+echo "" > "$UNITY"
 
-for target_src in $SOURCES; do
-	EXEC mkdir -p $(dirname $OUT/$TARGET/$target_src.o)
-	EXEC $CC -o $OUT/$TARGET/$target_src.o -c $SRC/$target_src $CCXFLAGS $CPPFLAGS
-done
+SOURCES="$(find $SRC -name '*.c' ! -name '*_main.c' -exec echo "#include \"$(realpath {})\"" >> "$UNITY" \;)"
+echo "#include \"$(realpath $SRC/$TARGET_MAIN)\"" >> "$UNITY"
 
-EXEC mkdir -p $(dirname $OUT/$TARGET/$TARGET_MAIN.o)
-EXEC $CC -o $OUT/$TARGET/$TARGET_MAIN.o -c $SRC/$TARGET_MAIN $CCXFLAGS $CPPFLAGS
+EXEC $CC -o "$OUT/$TARGET.elf" "$UNITY" $CCXFLAGS $CPPFLAGS $LDDFLAGS
 
-OBJECTS="$(find $OUT/$TARGET -name '*.o')"
-
-EXEC $CC -o $OUT/$TARGET.elf $OBJECTS $LDDFLAGS
+rm "$UNITY"
 
 EXEC $OBJCOPY -O ihex -R .eeprom -R .fuse -R .lock -R .signature $OUT/$TARGET.elf $OUT/$TARGET.hex
