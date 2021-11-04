@@ -2,6 +2,20 @@
 
 . "$(dirname $0)/common.sh"
 
+# to speed up build
+export MAKEFLAGS="-j$(nproc)"
+COMMON_FLAGS="-O2 -pipe"
+export CFLAGS="$COMMON_FLAGS"
+export CXXFLAGS="$COMMON_FLAGS"
+export LDFLAGS=""
+
+# avoid using (not yet built) cross toolchain
+AR="$NATIVE_AR"
+AS="$NATIVE_AS"
+CC="$NATIVE_CC"
+LD="$NATIVE_LD"
+OBJCOPY="$NATIVE_OBJCOPY"
+
 # to avoid rebuilding unnecessarily, we have a timestamp
 TIMESTAMP="$TOOLS/build-timestamp"
 
@@ -91,7 +105,6 @@ cd binutils-build
 	--with-sysroot \
 	--disable-libquadmath \
 	--disable-libssp \
-	--disable-lto \
 	--disable-nls \
 	--disable-host-shared \
 	--disable-shared
@@ -120,11 +133,13 @@ cd gcc-build
 ../configure \
 	--prefix="$CROSS_ROOT" \
 	--target="$GCC_TARGET" \
+	--with-cpu=cortex-m7 \
+	--with-float=hard \
+	--with-fpu=fpv5-d16 \
 	--enable-languages=c \
 	--without-headers \
 	--disable-libquadmath \
 	--disable-libssp \
-	--disable-lto \
 	--disable-nls \
 	--disable-host-shared \
 	--disable-shared
@@ -136,7 +151,7 @@ cd $__OLD
 
 echo "Building teensy_loader_cli..."
 make -C $TOOLS/$TEENSY_LOADER_PKG
-cp $TOOLS/$TEENSY_LOADER_PKG/teensy_loader_cli $TOOLSBIN
+cp $TOOLS/$TEENSY_LOADER_PKG/teensy_loader_cli $CROSS_BIN
 [ $? -ne 0 ] && exit 1
 
 touch $TIMESTAMP

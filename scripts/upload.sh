@@ -1,6 +1,6 @@
 #!/bin/sh
 
-. "$(dirname $0)/build-common.sh"
+. "$(dirname $0)/common.sh"
 
 TARGET="$1"
 

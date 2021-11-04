@@ -2,27 +2,31 @@
 
 .DEFAULT_GOAL := main
 
-SCRIPTS=./scripts
+# this will set the correct linker script and use the correct bsp_*.c source
+# for the given platform. see lib/stdlib for the possible values
+PLATFORM := $(or $(strip $(PLATFORM)),teensy41)
+
+SCRIPTS := ./scripts
 
 log: clean deps
-	${SCRIPTS}/test.sh log_node
-	${SCRIPTS}/build.sh log_node
-	${SCRIPTS}/upload.sh log_node
+	${SCRIPTS}/test.sh log_node ${PLATFORM}
+	${SCRIPTS}/build.sh log_node ${PLATFORM}
+	${SCRIPTS}/upload.sh log_node ${PLATFORM}
 
 main: clean deps
-	${SCRIPTS}/test.sh main_node
-	${SCRIPTS}/build.sh main_node
-	${SCRIPTS}/upload.sh main_node
+	${SCRIPTS}/test.sh main_node ${PLATFORM}
+	${SCRIPTS}/build.sh main_node ${PLATFORM}
+	${SCRIPTS}/upload.sh main_node ${PLATFORM}
 
 motor: clean deps
-	${SCRIPTS}/test.sh motor_node
-	${SCRIPTS}/build.sh motor_node
-	${SCRIPTS}/upload.sh motor_node
+	${SCRIPTS}/test.sh motor_node ${PLATFORM}
+	${SCRIPTS}/build.sh motor_node ${PLATFORM}
+	${SCRIPTS}/upload.sh motor_node ${PLATFORM}
 
 web: clean deps
-	${SCRIPTS}/test.sh web_node
-	${SCRIPTS}/build.sh web_node
-	${SCRIPTS}/upload.sh web_node
+	${SCRIPTS}/test.sh web_node ${PLATFORM}
+	${SCRIPTS}/build.sh web_node ${PLATFORM}
+	${SCRIPTS}/upload.sh web_node ${PLATFORM}
 
 test: deps
 	${SCRIPTS}/test.sh
