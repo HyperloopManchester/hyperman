@@ -1,9 +1,7 @@
 # hyperman
-
-Main repo for the manchester hyperloop pod. Platform IO, integration tests, etc
+Main repo for the manchester hyperloop pod. Node sources, tests, etc
 
 ## Setup
-
 To initially set up the repo, it is enough to clone the repo and its submodules:
 ```sh
 $ git clone https://github.com/HyperloopManchester/hyperman.git
@@ -13,9 +11,7 @@ $ git submodule update
 ```
 
 ## Development
-
 ### Developing Hyperman
-
 To work on hyperman, the usual workflow will be:
 1. Pull any changes, rebasing your current commits onto the new commits
 2. Work on a part of the code
@@ -90,9 +86,7 @@ $ git branch -d feature-foo
 You may now start to work on a new feature again!
 
 ### Developing a Submodule
-
 #### Setup
-
 Whilst the submodules are checked out when the repository is cloned, they are
 in a detached state, without any local branch. Any work committed will be lost
 when the submodule is updated. Thus, it is necessary to setup a local branch
@@ -103,28 +97,12 @@ $ git checkout master
 ```
 
 #### Development
-
 Development on a submodule is virtually identical to regular development. You
 navigate to the submodule directory, and you run the same commands you would
 in regular development.
 
 ## Testing
+We are currently using our own basic testing framework, and examples of tests
+can be found under `test/stdlib/test_example.c`
 
-All testing and compilation will be done with platform io. Testing will be done
-on the host machine, with the help of hardware mocks, since debugging doesn't 
-really exist on microcontrollers (without expensive hardware debuggers). Thus
-to run all the tests, run the following command:
-```sh
-# the native environment means the host machine
-$ pio test --environment native
-```
-
-We are currently using our own very basic testing framework, and examples of
-a set of tests can be found under `test/example.c`.
-
-## Remote Development
-
-We use a hardware server to allow for remote development, which is accessible
-through a vpn.
-
-TODO
+All tests are ran before a build, as part of the Makefile.
