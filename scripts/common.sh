@@ -38,17 +38,21 @@ LIB="$ROOT/lib"
 TEST="$ROOT/test"
 OUT="$ROOT/out"
 
-CCXFLAGS="-std=c11 -ffreestanding -Os -Wall -Wextra -Wpedantic -flto -mthumb"
+CCXFLAGS="-std=c11 -ffreestanding -Os -Wall -Wextra -Wpedantic -mthumb"
 CPPFLAGS="-I$INC -I$LIB/stdlib/include"
-LDDFLAGS="-ffreestanding -Os -nostdlib -lgcc -L$OUT -lstdlib -flto"
+LDDFLAGS="-ffreestanding -Os -nostdlib -lgcc -L$OUT -lstdlib"
 
 TEST_CCXFLAGS="-std=c11 -Wall -Wextra -Wpedantic -Wno-unused-value"
 TEST_CPPFLAGS="-I$INC -I$LIB/stdlib/include"
 TEST_LDDFLAGS="-L$OUT -lstdlib-native"
 
-STDLIB_CCXFLAGS="-std=c11 -ffreestanding -Os -Wall -Wextra -Wpedantic"
+STDLIB_CCXFLAGS="-std=c11 -ffreestanding -Os -Wall -Wextra -Wpedantic -mthumb"
 STDLIB_CPPFLAGS="-I$LIB/stdlib/include"
 STDLIB_LDDFLAGS="-ffreestanding -Os -nostdlib -lgcc -L$OUT"
+
+NATIVE_STDLIB_CCXFLAGS="-std=c11 -Wall -Wextra -Wpedantic"
+NATIVE_STDLIB_CPPFLAGS="-I$LIB/stdlib/include"
+NATIVE_STDLIB_LDDFLAGS="-L$OUT"
 
 MOCKLIB_CCXFLAGS=""
 MOCKLIB_CPPFLAGS=""
