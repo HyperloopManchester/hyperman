@@ -9,30 +9,30 @@ PLATFORM := $(or $(strip $(PLATFORM)),teensy41)
 SCRIPTS := ./scripts
 
 log: clean deps
-	${SCRIPTS}/test.sh log_node ${PLATFORM}
+	${SCRIPTS}/test.sh log_node
 	${SCRIPTS}/build.sh log_node ${PLATFORM}
-	${SCRIPTS}/upload.sh log_node ${PLATFORM}
+	${SCRIPTS}/upload.sh log_node
 
 main: clean deps
-	${SCRIPTS}/test.sh main_node ${PLATFORM}
+	${SCRIPTS}/test.sh main_node
 	${SCRIPTS}/build.sh main_node ${PLATFORM}
-	${SCRIPTS}/upload.sh main_node ${PLATFORM}
+	${SCRIPTS}/upload.sh main_node
 
 motor: clean deps
-	${SCRIPTS}/test.sh motor_node ${PLATFORM}
+	${SCRIPTS}/test.sh motor_node
 	${SCRIPTS}/build.sh motor_node ${PLATFORM}
-	${SCRIPTS}/upload.sh motor_node ${PLATFORM}
+	${SCRIPTS}/upload.sh motor_node
 
 web: clean deps
-	${SCRIPTS}/test.sh web_node ${PLATFORM}
+	${SCRIPTS}/test.sh web_node
 	${SCRIPTS}/build.sh web_node ${PLATFORM}
-	${SCRIPTS}/upload.sh web_node ${PLATFORM}
+	${SCRIPTS}/upload.sh web_node
 
 test: deps
 	${SCRIPTS}/test.sh
 
 deps:
-	${SCRIPTS}/deps.sh
+	${SCRIPTS}/deps.sh ${PLATFORM}
 	${SCRIPTS}/native-deps.sh
 	${SCRIPTS}/test.sh stdlib
 

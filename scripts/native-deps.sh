@@ -2,16 +2,13 @@
 
 . "$(dirname $0)/common.sh"
 
-__OLD="$(pwd)"
-cd $LIB/stdlib/src
-	SOURCES="$(find -name '*.c')"
-cd $__OLD
+UNITY="$(mktemp --suffix=.c)"
+echo "" > "$UNITY"
 
-for stdlib_src in $SOURCES; do
-	EXEC mkdir -p $(dirname $OUT/stdlib-native/$stdlib_src.o)
-	EXEC $NATIVE_CC -o $OUT/stdlib-native/$stdlib_src.o -c $LIB/stdlib/src/$stdlib_src $NATIVE_STDLIB_CCXFLAGS $NATIVE_STDLIB_CPPFLAGS $NATIVE_STDLIB_LDDFLAGS
-done
+find "$LIB/stdlib/src" -name '*.c' -exec echo "#include \"$(realpath {})\"" >> "$UNITY" \;
 
-OBJECTS="$(find $OUT/stdlib-native -name '*.o')"
+EXEC $NATIVE_CC -o "$OUT/stdlib-native.o" -c "$UNITY" $NATIVE_STDLIB_CCXFLAGS $NATIVE_STDLIB_CPPFLAGS $NATIVE_STDLIB_LDDFLAGS
 
-EXEC $NATIVE_AR rcs $OUT/libstdlib-native.a $OBJECTS
+rm "$UNITY"
+
+EXEC $NATIVE_AR rcs "$OUT/libstdlib-native.a" "$OUT/stdlib-native.o"

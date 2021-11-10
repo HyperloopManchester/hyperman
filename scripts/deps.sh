@@ -2,16 +2,17 @@
 
 . "$(dirname $0)/common.sh"
 
-__OLD="$(pwd)"
-cd $LIB/stdlib/src
-	SOURCES="$(find -name '*.c')"
-cd $__OLD
+PLATFORM="$1"
+TARGET_BSP="$LIB/stdlib/bsp_$PLATFORM.c"
 
-for stdlib_src in $SOURCES; do
-	EXEC mkdir -p $(dirname $OUT/stdlib/$stdlib_src.o)
-	EXEC $CC -o $OUT/stdlib/$stdlib_src.o -c $LIB/stdlib/src/$stdlib_src $STDLIB_CCXFLAGS $STDLIB_CPPFLAGS $STDLIB_LDDFLAGS
-done
+UNITY="$(mktemp --suffix=.c)"
+echo "" > "$UNITY"
 
-OBJECTS="$(find $OUT/stdlib -name '*.o')"
+echo "#include \"$(realpath $TARGET_BSP)\"" >> "$UNITY"
+find "$LIB/stdlib/src" -name '*.c' -exec echo "#include \"$(realpath {})\"" >> "$UNITY" \;
 
-EXEC $AR rcs $OUT/libstdlib.a $OBJECTS
+EXEC $CC -o "$OUT/stdlib.o" -c "$UNITY" $STDLIB_CCXFLAGS $STDLIB_CPPFLAGS $STDLIB_LDDFLAGS
+
+rm "$UNITY"
+
+EXEC $AR rcs "$OUT/libstdlib.a" "$OUT/stdlib.o"

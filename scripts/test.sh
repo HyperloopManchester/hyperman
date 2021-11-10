@@ -14,9 +14,9 @@ cd $__OLD
 
 FAILED=0
 for test_src in $TESTS; do
-	EXEC mkdir -p $(dirname $OUT/$test_src)
-	EXEC $NATIVE_CC -o $OUT/$test_src.x $TEST/$test_src $TEST_CCXFLAGS $TEST_CPPFLAGS $TEST_LDDFLAGS && \
-	LD_LIBRARY_PATH=$LIB:$OUT:$LD_LIBRARY_PATH  $OUT/$test_src.x
+	EXEC mkdir -p "$(dirname $OUT/$test_src)"
+	EXEC $NATIVE_CC -o "$OUT/$test_src.x" "$TEST/$test_src" $TEST_CCXFLAGS $TEST_CPPFLAGS $TEST_LDDFLAGS && \
+	LD_LIBRARY_PATH="$LIB:$OUT:$LD_LIBRARY_PATH" "$OUT/$test_src.x"
 
 	[ $? -ne 0 ] && FAILED=1
 done
