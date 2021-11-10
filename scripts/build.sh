@@ -14,7 +14,7 @@ echo "" > "$UNITY"
 find "$SRC" -name '*.c' -exec echo "#include \"$(realpath {})\"" >> "$UNITY" \;
 echo "#include \"$(realpath $ROOT/$TARGET_MAIN)\"" >> "$UNITY"
 
-EXEC $CC -o "$OUT/$TARGET.elf" "$UNITY" $CCXFLAGS $CPPFLAGS $LDDFLAGS "-T$TARGET_LINKER_SCRIPT"
+EXEC $CC -o "$OUT/$TARGET.elf" "$UNITY" $HYPERMAN_CXXFLAGS $HYPERMAN_CPPFLAGS $HYPERMAN_LDDFLAGS "-T$TARGET_LINKER_SCRIPT"
 
 rm "$UNITY"
 

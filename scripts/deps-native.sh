@@ -7,7 +7,7 @@ echo "" > "$UNITY"
 
 find "$LIB/stdlib/src" -name '*.c' -exec echo "#include \"$(realpath {})\"" >> "$UNITY" \;
 
-EXEC $NATIVE_CC -o "$OUT/stdlib-native.o" -c "$UNITY" $NATIVE_STDLIB_CCXFLAGS $NATIVE_STDLIB_CPPFLAGS $NATIVE_STDLIB_LDDFLAGS
+EXEC $NATIVE_CC -o "$OUT/stdlib-native.o" -c "$UNITY" $NATIVE_STDLIB_CXXFLAGS $NATIVE_STDLIB_CPPFLAGS $NATIVE_STDLIB_LDDFLAGS
 
 rm "$UNITY"
 

@@ -11,7 +11,7 @@ echo "" > "$UNITY"
 echo "#include \"$(realpath $TARGET_BSP)\"" >> "$UNITY"
 find "$LIB/stdlib/src" -name '*.c' -exec echo "#include \"$(realpath {})\"" >> "$UNITY" \;
 
-EXEC $CC -o "$OUT/stdlib.o" -c "$UNITY" $STDLIB_CCXFLAGS $STDLIB_CPPFLAGS $STDLIB_LDDFLAGS
+EXEC $CC -o "$OUT/stdlib.o" -c "$UNITY" $STDLIB_CXXFLAGS $STDLIB_CPPFLAGS $STDLIB_LDDFLAGS
 
 rm "$UNITY"
 
