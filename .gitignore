@@ -1,2 +1,5 @@
 tools/
 out/
+
+# dont track vim swapfiles
+**/.*.swp
