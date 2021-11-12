@@ -77,24 +77,24 @@ DOWNLOAD() {
 	cd $__OLD
 }
 
-DOWNLOAD $TOOLS/$BIN_ARCHIVE $BIN_SRC
-DOWNLOAD $TOOLS/$GCC_ARCHIVE $GCC_SRC
-DOWNLOAD $TOOLS/$GMP_ARCHIVE $GMP_SRC
-DOWNLOAD $TOOLS/$MPC_ARCHIVE $MPC_SRC
-DOWNLOAD $TOOLS/$MPFR_ARCHIVE $MPFR_SRC
+DOWNLOAD "$TOOLS/$BIN_ARCHIVE" "$BIN_SRC"
+DOWNLOAD "$TOOLS/$GCC_ARCHIVE" "$GCC_SRC"
+DOWNLOAD "$TOOLS/$GMP_ARCHIVE" "$GMP_SRC"
+DOWNLOAD "$TOOLS/$MPC_ARCHIVE" "$MPC_SRC"
+DOWNLOAD "$TOOLS/$MPFR_ARCHIVE" "$MPFR_SRC"
 
-[ ! -d "$TOOLS/teensy_loader_cli" ] && git clone $TEENSY_LOADER_SRC $TOOLS/teensy_loader_cli
+[ ! -d "$TOOLS/teensy_loader_cli" ] && git clone "$TEENSY_LOADER_SRC" "$TOOLS/teensy_loader_cli"
 
 # build tools
 EXTRACT() {
-	tar xf "$1" -C $TOOLS
+	tar xf "$1" -C "$TOOLS"
 }
 
 echo "Building cross-binutils..."
-EXTRACT $TOOLS/$BIN_ARCHIVE $TOOLS/$BIN_PKG
+EXTRACT "$TOOLS/$BIN_ARCHIVE" "$TOOLS/$BIN_PKG"
 
 __OLD="$(pwd)"
-cd $TOOLS/$BIN_PKG
+cd "$TOOLS/$BIN_PKG"
 
 mkdir binutils-build
 cd binutils-build
@@ -112,20 +112,20 @@ cd binutils-build
 make && make install
 [ $? -ne 0 ] && exit 1
 
-cd $__OLD
+cd "$__OLD"
 
 echo "Building cross-gcc..."
-EXTRACT $TOOLS/$GCC_ARCHIVE $TOOLS/$GCC_PKG
-EXTRACT $TOOLS/$GMP_ARCHIVE $TOOLS/$GMP_PKG
-EXTRACT $TOOLS/$MPC_ARCHIVE $TOOLS/$MPC_PKG
-EXTRACT $TOOLS/$MPFR_ARCHIVE $TOOLS/$MPFR_PKG
+EXTRACT "$TOOLS/$GCC_ARCHIVE" "$TOOLS/$GCC_PKG"
+EXTRACT "$TOOLS/$GMP_ARCHIVE" "$TOOLS/$GMP_PKG"
+EXTRACT "$TOOLS/$MPC_ARCHIVE" "$TOOLS/$MPC_PKG"
+EXTRACT "$TOOLS/$MPFR_ARCHIVE" "$TOOLS/$MPFR_PKG"
 
-mv $TOOLS/$GMP_PKG $TOOLS/$GCC_PKG/gmp
-mv $TOOLS/$MPC_PKG $TOOLS/$GCC_PKG/mpc
-mv $TOOLS/$MPFR_PKG $TOOLS/$GCC_PKG/mpfr
+mv "$TOOLS/$GMP_PKG" "$TOOLS/$GCC_PKG/gmp"
+mv "$TOOLS/$MPC_PKG" "$TOOLS/$GCC_PKG/mpc"
+mv "$TOOLS/$MPFR_PKG" "$TOOLS/$GCC_PKG/mpfr"
 
 __OLD="$(pwd)"
-cd $TOOLS/$GCC_PKG
+cd "$TOOLS/$GCC_PKG"
 
 mkdir gcc-build
 cd gcc-build
@@ -147,11 +147,11 @@ cd gcc-build
 make all-gcc all-target-libgcc && make install-gcc install-target-libgcc
 [ $? -ne 0 ] && exit 1
 
-cd $__OLD
+cd "$__OLD"
 
 echo "Building teensy_loader_cli..."
-make -C $TOOLS/$TEENSY_LOADER_PKG
-cp $TOOLS/$TEENSY_LOADER_PKG/teensy_loader_cli $CROSS_BIN
+make -C "$TOOLS/$TEENSY_LOADER_PKG"
+cp "$TOOLS/$TEENSY_LOADER_PKG/teensy_loader_cli" "$CROSS_BIN"
 [ $? -ne 0 ] && exit 1
 
-touch $TIMESTAMP
+touch "$TIMESTAMP"
