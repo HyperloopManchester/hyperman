@@ -43,11 +43,11 @@ COMMON_CXXFLAGS="-std=c11 -Wall -Wextra -Wpedantic"
 COMMON_CPPFLAGS="-I$INC -I$LIB/stdlib/include"
 COMMON_LDDFLAGS="-L$OUT"
 
-HYPERMAN_CXXFLAGS="$COMMON_CXXFLAGS -ffreestanding -Os -mthumb"
+HYPERMAN_CXXFLAGS="$COMMON_CXXFLAGS -ffreestanding -Os -mthumb -mcpu=cortex-m7 -mfloat-abi=hard -mfpu=fpv5-d16"
 HYPERMAN_CPPFLAGS="$COMMON_CPPFLAGS"
 HYPERMAN_LDDFLAGS="$COMMON_LDDFLAGS -nostdlib -lstdlib"
 
-STDLIB_CXXFLAGS="$COMMON_CXXFLAGS -ffreestanding -Os -mthumb"
+STDLIB_CXXFLAGS="$COMMON_CXXFLAGS -ffreestanding -Os -mthumb -mcpu=cortex-m7 -mfloat-abi=hard -mfpu=fpv5-d16"
 STDLIB_CPPFLAGS="$COMMON_CPPFLAGS"
 STDLIB_LDDFLAGS="$COMMON_LDDFLAGS -nostdlib"
 
